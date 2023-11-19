@@ -1,0 +1,9 @@
+to_do.txt
+BrawlBack/auto/__pycache__
+BrawlBack/db/__pycache__
+BrawlBack/requests_pack/__pycache__
+BrawlBack/routers/__pycache__
+BrawlBack/schemas/__pycache__
+BrawlBack/security/__pycache__
+BrawlBack/test/__pycache__
+BrawlBack/.env
