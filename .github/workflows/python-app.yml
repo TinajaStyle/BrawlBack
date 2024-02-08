@@ -1,0 +1,45 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+        DB_URL: ${{ secrets.DB_URL }}
+        BRAWL_API_URL: ${{ vars.BRAWL_API_URL }}
+        BRAWL_API_TOKEN: "Not required"
+        ALGORITHM: ${{ secrets.ALGORITHM }}
+        UNLOCK: ${{ secrets.UNLOCK }}
+        TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+        API_URL: ${{ vars.API_URL }}
+        USER_TEST: ${{ secrets.USER_TEST }}
+        PASSWORD_TEST: ${{ secrets.PASSWORD_TEST }}
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run server
+      run: |
+        cd $GITHUB_WORKSPACE/BrawlBack
+        python3 main.py &
+        sleep 5
+        sed -i "s/username = \"\"/username = \"${{ env.USER_TEST }}\"/" $GITHUB_WORKSPACE/BrawlBack/test/test_app.py
+        sed -i "s/password = \"\"/password = \"${{ env.PASSWORD_TEST }}\"/" $GITHUB_WORKSPACE/BrawlBack/test/test_app.py
+        pytest $GITHUB_WORKSPACE/BrawlBack/test/test_app.py

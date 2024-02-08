@@ -1,4 +1,5 @@
 to_do.txt
+.vscode
 BrawlBack/auto/__pycache__
 BrawlBack/db/__pycache__
 BrawlBack/requests_pack/__pycache__
@@ -7,3 +8,6 @@ BrawlBack/schemas/__pycache__
 BrawlBack/security/__pycache__
 BrawlBack/test/__pycache__
 BrawlBack/.env
+BrawlBack/logs
+BrawlBack/__pycache__
+BrawlBack/.pytest_cache
